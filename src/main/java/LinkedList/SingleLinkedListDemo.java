@@ -55,6 +55,10 @@ public class SingleLinkedListDemo {
 class SingleLinkedList {
     private HeroNode head = new HeroNode(0, " ");
 
+    public HeroNode getHead() {
+        return head;
+    }
+
     //添加一个新的节点数据到链表尾部
     public void addNode(HeroNode newNode) {
         HeroNode temp = head;
@@ -113,7 +117,7 @@ class SingleLinkedList {
     }
 
     //根据序号删除链表数据
-    public void deleteNode(int no) {
+    public void deleteNode(int no) {  //单向链表只能找到要删除的节点的前一个节点
         HeroNode temp = head;
         boolean flag = false;
 
