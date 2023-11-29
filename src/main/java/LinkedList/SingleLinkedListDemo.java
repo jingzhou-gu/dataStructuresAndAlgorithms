@@ -35,6 +35,19 @@ public class SingleLinkedListDemo {
         System.out.println("-----------");
         singleLinkedList.reverseShow();
 
+        System.out.println("***************");
+        HeroNode hh1 = new HeroNode(1, "aa");
+        HeroNode hh2 = new HeroNode(5, "bb");
+        HeroNode hh3 = new HeroNode(8, "cc");
+        HeroNode hh4 = new HeroNode(3, "dd");
+        HeroNode hh5 = new HeroNode(9, "ee");
+        HeroNode hh6 = new HeroNode(17, "ff");
+        hh1.next = hh2;
+        hh2.next = hh3;
+        hh4.next = hh5;
+        hh5.next = hh6;
+        HeroNode hNode = singleLinkedList.mergeNode(hh1, hh4);
+
     }
 }
 
@@ -137,11 +150,11 @@ class SingleLinkedList {
 
     //获取链表 倒数 第index个节点的数据
     public HeroNode findLastIndexNode(int index) {
-        if(head.next==null){
+        if (head.next == null) {
             return null;
         }
         int length = getLength();  //获取链表的节点个数
-        if(index<=0 || index>length){
+        if (index <= 0 || index > length) {
             return null;
         }
         HeroNode temp = head.next;
@@ -171,17 +184,32 @@ class SingleLinkedList {
 
 
     //合并两个有序的单链表，合并之后的链表依然有序
-    public HeroNode mergeNode(HeroNode h1,HeroNode h2){
-        if(h1.next==null && h2.next==null){
-            return null;
-        }
-        if(h1.next==null){
+    public HeroNode mergeNode(HeroNode h1, HeroNode h2) {
+        if (h1 == null) {
             return h2;
         }
-        if(h2.next==null){
+        if (h2 == null) {
             return h1;
         }
-        return null;
+        HeroNode newHead = new HeroNode(0, " "); //创建一个新链表的头结点
+        HeroNode temp = newHead;    //创建一个新链表的向后移动的指针
+        while (h1 != null && h2 != null) {
+            if (h1.no <= h2.no) {
+                temp.next = h1; //将链表1的值赋给新链表的移动指针的下一位
+                temp = temp.next; //向后移动新链表指针
+                h1 = h1.next;  //向后移动链表1的指针
+            } else {
+                temp.next = h2; //将链表2的值赋给新链表的移动指针的下一位
+                temp = temp.next;  //向后移动新链表指针
+                h2 = h2.next;  //向后移动链表2的指针
+            }
+        }
+        if (h1 == null) {
+            temp.next = h2;  //链表1的值已取完，将链表2的剩余值添加到新链表尾部
+        } else {
+            temp.next = h1;  //链表2的值已取完，将链表1的剩余值添加到新链表尾部
+        }
+        return newHead.next;
     }
 
     //展示链表所有数据
@@ -201,19 +229,19 @@ class SingleLinkedList {
     }
 
     //倒序打印链表的所有数据
-    public void reverseShow(){
-        if(head.next==null){
+    public void reverseShow() {
+        if (head.next == null) {
             System.out.println("该链表为空");
             return;
         }
         int length = getLength();    //获取链表长度
         Stack<HeroNode> stack = new Stack<HeroNode>();
         HeroNode temp = head.next;
-        while (temp!=null){
+        while (temp != null) {
             stack.push(temp);    //将链表数据压入栈中
-            temp=temp.next;
+            temp = temp.next;
         }
-        while (stack.size()>0){
+        while (stack.size() > 0) {
             System.out.println(stack.pop());  //将栈中数据依次打印
         }
 
