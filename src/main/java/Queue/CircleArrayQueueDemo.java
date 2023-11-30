@@ -58,9 +58,9 @@ public class CircleArrayQueueDemo {
     }
 }
 
-class CircleArrQueue {
-    private int front;
-    private int rear;
+class CircleArrQueue {  //环形数组队列
+    private int front;  //指向队列的第一个元素位置
+    private int rear;   //指向队列最后一个元素的后一个位置
     private int maxSize;
     private int[] arr;
 
@@ -71,7 +71,7 @@ class CircleArrQueue {
         arr = new int[maxSize];
     }
 
-    public boolean isFull() {
+    public boolean isFull() {  //队列差一个元素则认为满了，为了区分空队列和满队列
         return (rear + maxSize - front) % maxSize == maxSize - 1;
     }
 
