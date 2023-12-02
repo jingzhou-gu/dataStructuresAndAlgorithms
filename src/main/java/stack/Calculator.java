@@ -9,13 +9,14 @@ public class Calculator {
     public static void main(String[] args) {
         ArrayStack2 numStack = new ArrayStack2(10); //用来存放数字的栈
         ArrayStack2 operStack = new ArrayStack2(10); //用来存放字符的栈
-        String expression = "2+3*2-9";
+        String expression = "2+13*2-90";
         int index = 0; //用于expression指针的移动
         int num1 = 0;
         int num2 = 0;
         int oper = 0;
         int res = 0;
         char ch = ' '; //将每次扫描的结果存到ch
+        String keepNum = "";  //用于拼接多位数
         while (true) {
             ch = expression.substring(index, index + 1).charAt(0);  //从表达式中取出一个字符
             if (operStack.isOper(ch)) {  //判断是运算符
@@ -39,7 +40,16 @@ public class Calculator {
                 //1.当处理多位数时，不能发现一个数就立即入栈，因为可能是多位数
                 //2.在处理时，要向expression的表达式的index后再看一位，如果是数就进行扫描，是符号才入栈
                 //3.因此需要定一个变量 字符串，用于拼接
-                numStack.push(ch - '0'); //得到的数字是char '1'，要转换成int 1
+                keepNum = keepNum + ch; //拼接当前字符
+
+                if (index == expression.length() - 1) { //先判断当前索引是不是最后一位
+                    numStack.push(Integer.parseInt(keepNum));  //是最后一位直接入栈
+                } else { //不是最后一位，查看下一位是不是符号
+                    if (operStack.isOper(expression.substring(index + 1, index + 2).charAt(0))) { //查看下一位是不是符号
+                        numStack.push(Integer.parseInt(keepNum)); //下一位是符号，直接将数字入栈
+                        keepNum = "";  //入栈后要将多位数字符串清空！！！
+                    }
+                }
             }
             index++;
             if (index >= expression.length()) { //判断指针走到字符串最后
@@ -56,6 +66,7 @@ public class Calculator {
             numStack.push(res);
         }
         System.out.println("最后表达式" + expression + "的结果为：" + numStack.pop());
+
     }
 }
 
