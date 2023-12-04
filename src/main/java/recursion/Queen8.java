@@ -12,7 +12,7 @@ public class Queen8 {
         putPlace(queen, 0, max);  //运用递归遍历查找所有的方案
     }
 
-    //
+
     //queen表示放置位置的数组，n表示放置的第几个皇后，max表示总共有几个皇后
     public static void putPlace(int[] queen, int n, int max) {
         if (n == max) {  //n从0开始，当n==8时，表示所有皇后已经放好了
