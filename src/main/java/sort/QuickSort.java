@@ -18,7 +18,7 @@ public class QuickSort {
         for (int i = 0; i < 80000; i++) {
             a[i] = (int) (Math.random() * 8000000);
         }
-        //测试80000数据排序不到1s   8000000数据只需1s
+        //测试80000数据排序不到1s   8000000数据只需1s  8千万数据需要19s
         System.out.println(System.currentTimeMillis() / 1000); //1702193787
         quickSort(a, 0, a.length - 1);
         System.out.println(System.currentTimeMillis() / 1000); //1702193787
