@@ -13,6 +13,8 @@ public class BinarySearch {
         System.out.println(binarySearch(arr, 0, arr.length - 1, 5));
 
         System.out.println(binarySearch2(arr, 0, arr.length - 1, 5));
+
+        System.out.println(binarySearch3(arr, 2));
     }
 
     //二分查找
@@ -60,5 +62,23 @@ public class BinarySearch {
             }
             return list;
         }
+    }
+
+    //非递归方式进行二分查找
+    public static int binarySearch3(int[] arr, int value) {
+        int left = 0;
+        int right = arr.length - 1;
+        int mid = 0;
+        while (left <= right) {
+            mid = (left + right) / 2;
+            if (arr[mid] < value) {
+                left = mid + 1;
+            } else if (arr[mid] > value) {
+                right = mid - 1;
+            } else {
+                return mid;
+            }
+        }
+        return -1;
     }
 }
