@@ -1,9 +1,5 @@
 package tree;
 
-import jdk.management.resource.internal.inst.SocketOutputStreamRMHooks;
-
-import java.net.SocketTimeoutException;
-
 /**
  * @ClassName：BinaryTree
  * @Author: gjz
