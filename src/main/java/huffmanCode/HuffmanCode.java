@@ -11,6 +11,8 @@ public class HuffmanCode {
     public static void main(String[] args) {
         String context = "i like like like java do you like a java";
         byte[] bytes = context.getBytes();
+//[105, 32, 108, 105, 107, 101, 32, 108, 105, 107, 101, 32, 108, 105, 107, 101, 32, 106, 97, 118, 97, 32, 100, 111, 32, 121, 111, 117, 32, 108, 105, 107, 101, 32, 97, 32, 106, 97, 118, 97]
+        System.out.println(Arrays.toString(bytes));
 
         ArrayList<Node> list = getList(bytes);
         Node node = createHuffmanTree(list); //获取赫夫曼树
@@ -19,10 +21,28 @@ public class HuffmanCode {
         HashMap<Byte, String> map = new HashMap<>();
         StringBuilder stringBuilder = new StringBuilder();
         Map<Byte, String> huffmanCode = getHuffmanCode(node, "", stringBuilder, map);  //获取赫夫曼编码
+        //{32=01, 97=100, 100=11000, 117=11001, 101=1110, 118=11011, 105=101, 121=11010, 106=0010, 107=1111, 108=000, 111=0011}
         System.out.println(huffmanCode);
 
         byte[] zip = zip(bytes, huffmanCode); //将byte数组按照赫夫曼编码压缩
+        //[-88, -65, -56, -65, -56, -65, -55, 77, -57, 6, -24, -14, -117, -4, -60, -90, 28]
         System.out.println(Arrays.toString(zip));
+
+        System.out.println("-------------");
+        StringBuilder sB = new StringBuilder();
+        HashMap<Byte, String> haspMap = new HashMap<>();
+        byte[] huffmanZip = huffmanZip(bytes, sB, haspMap);
+        //[-88, -65, -56, -65, -56, -65, -55, 77, -57, 6, -24, -14, -117, -4, -60, -90, 28]
+        System.out.println(Arrays.toString(huffmanZip));
+    }
+
+    //将方法封装到一个里面
+    public static byte[] huffmanZip(byte[] bytes, StringBuilder stringBuilder, Map<Byte, String> map) {
+        ArrayList<Node> list = getList(bytes);
+        Node huffmanTree = createHuffmanTree(list);
+        Map<Byte, String> huffmanCode = getHuffmanCode(huffmanTree, "", stringBuilder, map);
+        byte[] huffmanCodeBytes = zip(bytes, huffmanCode);
+        return huffmanCodeBytes;
     }
 
     //将一个Byte数组转换为list集合
