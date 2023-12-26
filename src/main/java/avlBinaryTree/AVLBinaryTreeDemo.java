@@ -1,4 +1,4 @@
-package main.java.avlBinaryTree;
+package avlBinaryTree;
 
 /**
  * @Author: gjz
@@ -7,7 +7,7 @@ package main.java.avlBinaryTree;
  */
 public class AVLBinaryTreeDemo {
     public static void main(String[] args) {
-        int[] arr = {4,3,6,5,7,8};
+        int[] arr = {2,1,6,5,7,3};
         AVLBinaryTree avlBinaryTree = new AVLBinaryTree();
         for (int i = 0; i < arr.length; i++) {
             avlBinaryTree.add(new Node(arr[i]));
@@ -21,6 +21,16 @@ public class AVLBinaryTreeDemo {
 
 class AVLBinaryTree {
     public Node root;
+
+    //右旋转，以node为根节点
+    public void rightRotate(Node node) {
+        Node newNode = new Node(node.value); //创建一个新节点，值等于根节点
+        newNode.left = node.left.right;  //根节点的左子节点的右子树赋给新节点的左子节点
+        newNode.right = node.right; //根节点的右子结点赋给新节点的右子结点
+        node.value = node.left.value; //根节点的左子节点的值赋给根节点
+        node.left = node.left.left; //根节点的左子节点的左子节点赋给根节点的左子节点
+        node.right = newNode; //新节点赋给根节点的右子结点
+    }
 
     //左旋转，以node为根节点
     public void leftRotate(Node node) {
@@ -78,9 +88,22 @@ class AVLBinaryTree {
                 add(node, temp.right); //将当前节点改为右子节点，继续递归
             }
         }
-
+        //添加完一个节点后，如果右子树高度-左子树高 > 1，进行左旋转
         if (rightHeight(temp) - leftHeight(temp) > 1) {
-            leftRotate(temp);
+            //如果它的右子树的左子树高度大于它的右子树的右子树高度，先对它的右子节点进行右旋转
+            if (leftHeight(temp.right) > rightHeight(temp.right)) {
+                rightRotate(temp.right); //先对它的右子节点进行右旋转
+            }
+            leftRotate(temp);  //对它进行左旋转
+            return;
+        }
+        //添加完一个节点后，如果左子树高度-右子树高 > 1，进行右旋转
+        if (leftHeight(temp) - rightHeight(temp) > 1) {
+            //如果它的左子树的右子树高度大于它的左子树的左子树高度，先对它的左子树进行左旋转
+            if (rightHeight(temp.left) > leftHeight(temp.left)) {
+                leftRotate(temp.left); //先对它的左子树进行左旋转
+            }
+            rightHeight(temp); //对它进行右旋转
         }
     }
 
