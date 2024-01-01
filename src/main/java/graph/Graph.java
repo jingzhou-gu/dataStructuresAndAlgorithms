@@ -1,4 +1,4 @@
-package main.java.graph;
+package graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * @Author: gjz
  * @Date: 2023/12/28 14:08
- * @Description: TODO
+ * @Description: TODO 图的深度优先遍历
  */
 public class Graph {
     public ArrayList<String> vertexList; //存储结点集合
@@ -35,20 +35,35 @@ public class Graph {
         graph.insertEdge(1,4,1); // B-E
 
         graph.showGraph();
+
+        graph.dfs();
     }
 
     //深度优先算法遍历
-    public void dfs(boolean[] isVisited,int i){
-        System.out.println(vertexList.get(i));
+    public void dfs() {
+        for (int i = 0; i < getNumOfVertex(); i++) { //避免有非联通图
+            if (!isVisited[i]) {
+                dfs(isVisited, i);
+            }
+        }
+    }
+    public void dfs(boolean[] isVisited, int i) {
+        System.out.print(vertexList.get(i) + " -> "); //输出当前结点
+        isVisited[i] = true; //将当前结点下标置为访问过
 
-        int firstNeighbor = getFirstNeighbor(i);
-
+        int neighbor = getFirstNeighbor(i); //获取当前结点的临结点
+        while (neighbor != -1) { //当临结点不为-1，循环递归
+            if (!isVisited[neighbor]) { //如果临结点未被访问过
+                dfs(isVisited, neighbor);  //递归进行遍历
+            }
+            neighbor = getNextNeighbor(i, neighbor); //当前邻结点被访问过，获取邻结点的下一个邻结点，继续
+        }
     }
 
     //查询当前结点的第一个邻接结点下标
-    public int getFirstNeighbor(int i){ //i为当前结点下标
+    public int getFirstNeighbor(int i) { //i为当前结点下标
         for (int j = 0; j < vertexList.size(); j++) { //从下标0开始遍历
-            if(edges[i][j]>0){ //如果权值大于0，说明是连通的
+            if (edges[i][j] > 0) { //如果权值大于0，说明是连通的
                 return j; //返回第一个相邻接点下标,并返回
             }
         }
@@ -56,9 +71,9 @@ public class Graph {
     }
 
     //查询上一个节点的下一个邻接结点下标
-    public int getNextNeighbor(int i,int j){ // i:上一个邻接点的下标 , j:上一个结点的当前邻接点下标
-        for (int k = j+1; k < vertexList.size(); k++) { //从当前临结点的下一个下标 j+1 开始查找
-            if(edges[i][k]>0){ //如果权值大于0，说明是连通的
+    public int getNextNeighbor(int i, int j) { // i:上一个邻接点的下标 , j:上一个结点的当前邻接点下标
+        for (int k = j + 1; k < vertexList.size(); k++) { //从当前临结点的下一个下标 j+1 开始查找
+            if (edges[i][k] > 0) { //如果权值大于0，说明是连通的
                 return k; //返回下一个邻结点下标
             }
         }
@@ -66,12 +81,12 @@ public class Graph {
     }
 
     //插入结点
-    public void insertVertex(String vertex){
+    public void insertVertex(String vertex) {
         vertexList.add(vertex);
     }
 
     //添加边    v1,v2表示点的下标
-    public void insertEdge(int v1,int v2,int weight){
+    public void insertEdge(int v1, int v2, int weight) {
         edges[v1][v2] = weight;
         edges[v2][v1] = weight;
         numOfEdges++;
