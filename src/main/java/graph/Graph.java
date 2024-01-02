@@ -2,6 +2,7 @@ package graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
  * @Author: gjz
@@ -13,12 +14,14 @@ public class Graph {
     public int[][] edges; //存储图对应的邻结矩阵
     public int numOfEdges; //表示边的数目
     public boolean[] isVisited; //表示该下标i的节点是否访问过
+    public LinkedList<Integer> queue; //用来存储结点的下标
 
     public Graph(int n){ //n为结点个数
         vertexList = new ArrayList<>(n);
         edges = new int[n][n];
         numOfEdges = 0;
         isVisited = new boolean[n];
+        queue = new LinkedList();
     }
 
     public static void main(String[] args){
@@ -36,7 +39,38 @@ public class Graph {
 
         graph.showGraph();
 
-        graph.dfs();
+//        graph.dfs();
+        graph.bfs();
+    }
+
+    //广度优先算法遍历
+    public void bfs() {
+        for (int i = 0; i < getNumOfVertex(); i++) { //避免有非联通图
+            if (!isVisited[i]) {
+                bfs(isVisited, i);
+            }
+        }
+    }
+    public void bfs(boolean[] isVisited, int i) {
+        System.out.print(vertexList.get(i) + " -> "); //输出当前结点
+        isVisited[i] = true; //将当前结点下标置为访问过
+        queue.addLast(i); //将当前结点的下标加入队列
+
+        int cur; //用来存储当前结点下标
+        int neighbor; //用来存储当前节点的邻接点下标
+
+        while (!queue.isEmpty()) { //队列不为空则一直循环
+            cur = queue.removeFirst(); //获取当前的结点下标
+            neighbor = getFirstNeighbor(cur); //获取当前节点的邻接点下标
+            while (neighbor != -1) { //当邻结点不为-1，循环查找当前结点的所有连接点
+                if (!isVisited[neighbor]) { //连接点未被访问过
+                    System.out.print(vertexList.get(neighbor) + " -> "); //输出连接点
+                    isVisited[neighbor] = true; //连接点下标置为true
+                    queue.addLast(neighbor); //将当前连接点加入到队列
+                }
+                neighbor = getNextNeighbor(cur, neighbor); //获取到当前结点的下一个结点下标
+            }
+        }
     }
 
     //深度优先算法遍历
@@ -52,8 +86,8 @@ public class Graph {
         isVisited[i] = true; //将当前结点下标置为访问过
 
         int neighbor = getFirstNeighbor(i); //获取当前结点的临结点
-        while (neighbor != -1) { //当临结点不为-1，循环递归
-            if (!isVisited[neighbor]) { //如果临结点未被访问过
+        while (neighbor != -1) { //当邻结点不为-1，循环递归
+            if (!isVisited[neighbor]) { //如果邻结点未被访问过
                 dfs(isVisited, neighbor);  //递归进行遍历
             }
             neighbor = getNextNeighbor(i, neighbor); //当前邻结点被访问过，获取邻结点的下一个邻结点，继续
