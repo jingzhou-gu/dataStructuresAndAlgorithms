@@ -39,11 +39,11 @@ public class GreedyAlgorithms {
         hashSet5.add("大连");
 
         //将各个电台加入到广播中
-        broadcasts.put("K1",hashSet1);
-        broadcasts.put("K2",hashSet2);
-        broadcasts.put("K3",hashSet3);
-        broadcasts.put("K4",hashSet4);
-        broadcasts.put("K5",hashSet5);
+        broadcasts.put("K1", hashSet1);
+        broadcasts.put("K2", hashSet2);
+        broadcasts.put("K3", hashSet3);
+        broadcasts.put("K4", hashSet4);
+        broadcasts.put("K5", hashSet5);
 
         // allAreas存放所有需要覆盖的地区
         HashSet<String> allAreas = new HashSet<>();
@@ -64,26 +64,30 @@ public class GreedyAlgorithms {
 
         int maxValue = 0;
         String maxKey = null; //覆盖数量最多的key
-        while (allAreas.size() > 0){
-            maxKey = null;
-            maxValue = 0;
+        while (allAreas.size() > 0) {
+            maxKey = null; //覆盖数量最多的key
+            maxValue = 0; //覆盖数量最多的个数
             for (String key : broadcasts.keySet()) { //遍历广播中的每个key
                 tempSet.clear();
                 HashSet<String> areas = broadcasts.get(key); //取出每个key对应的所有地区集合
                 tempSet.addAll(areas); //将地区集合添加到临时集合
                 tempSet.retainAll(allAreas); //将临时集合中的地区和所有地区求出交集放入临时集合
-
-                if(tempSet.size()>0 && (maxKey == null || tempSet.size() > maxValue) ){
-                    maxKey = key;
-                    maxValue = tempSet.size();
+                //tempSet.size()>0 说明存在交集
+                //maxKey == null 说明是存在交集的第一个key
+                //tempSet.size() > maxValue 说明新来的这个key的交集个数大于之前的最大值
+                if (tempSet.size() > 0 && (maxKey == null || tempSet.size() > maxValue)) {
+                    maxKey = key; //将现在的key赋给maxKey
+                    maxValue = tempSet.size(); //现在的交集个数赋给最大个数
                 }
             }
-            if(maxKey != null){
-                selects.add(maxKey);
-                allAreas.removeAll(broadcasts.get(maxKey));
+            if (maxKey != null) {
+                selects.add(maxKey); //将这个key放入集合中
+                allAreas.removeAll(broadcasts.get(maxKey)); //从所有地区中移除刚才maxKey涉及的地区
+            } else {
+                System.out.println("没有交集了,无法找到所有值");
+                break;
             }
         }
-
 //        HashMap<String, Integer> map = new HashMap<>();
 //        while(allAreas.size()>0){
 //            int max = 0;
@@ -117,7 +121,6 @@ public class GreedyAlgorithms {
 //            }
 //            map.clear();
 //        }
-
         System.out.println(selects);
     }
 }
