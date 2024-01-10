@@ -42,6 +42,9 @@ class MinTree {
             //确定每一次生成的子图,找一个最小的权值
             for (int i = 0; i < mGraph.vertex; i++) {
                 for (int j = 0; j < mGraph.vertex; j++) {
+                    if(visited[i] == 0){ //优化：如果i为未访问过,直接跳过此次循环
+                        break;
+                    }
                     // i为已经访问过的结点的下标，j为未访问过的节点下标
                     if (visited[i] == 1 && visited[j] == 0 && mGraph.weight[i][j] < minWeight) {
                         minWeight = mGraph.weight[i][j]; //找到权值最小的赋给minWeight
