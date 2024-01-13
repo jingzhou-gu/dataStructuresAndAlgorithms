@@ -1,4 +1,4 @@
-package main.java.Algorithm.kruskalCase;
+package Algorithm.kruskalCase;
 
 import java.util.Arrays;
 
@@ -29,6 +29,8 @@ public class KruskalCaseAlgorithm {
         System.out.println(Arrays.toString(edges));
         kruskalCase.sortEdges(edges);
         System.out.println(Arrays.toString(edges));
+        System.out.println("-------------------");
+        kruskalCase.kruskal();
     }
 }
 
@@ -54,24 +56,24 @@ class KruskalCase {
     public void kruskal(){
         int index = 0; //结果数组的下标
         EData[] results = new EData[vertexs.length-1]; //存放最终结果集
-        int[] ends = new int[vertexs.length-1]; //存放下标为i的顶点对应的终点的下标
+        int[] ends = new int[vertexs.length]; //存放下标为i的顶点对应的终点的下标
 
         EData[] edges = getEdges(); //获取所有边的数组
         sortEdges(edges); //对边的数组进行排序
 
         for (int i = 0; i < edges.length; i++) {  //对所有边进行遍历
-            int h1 = getPosition(edges[i].start);
-            int h2 = getPosition(edges[i].end);
+            int h1 = getPosition(edges[i].start); //获取当前这条边的开始点的下标
+            int h2 = getPosition(edges[i].end); //获取当前这条边的结束点的下标
 
-            int end1 = getEnd(ends, h1);
-            int end2 = getEnd(ends, h2);
+            int end1 = getEnd(ends, h1); //获取开始点的终点的下标
+            int end2 = getEnd(ends, h2); //获取结束点的终点的下标
 
-            if(end1 != end2){
-                results[index++] = edges[i];
-                ends[end1] = end2;
+            if(end1 != end2){ //两者不相等，说明这条边是我们需要的
+                results[index++] = edges[i]; //将当前这条边加到结果数组中
+                ends[end1] = end2; //将开始点的终点值设置为结束点的终点的下标
             }
         }
-
+        //输出结果
         System.out.println(Arrays.toString(results));
 
     }
