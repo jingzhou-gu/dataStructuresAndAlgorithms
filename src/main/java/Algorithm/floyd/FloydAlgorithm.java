@@ -21,6 +21,8 @@ public class FloydAlgorithm {
                 {2, 3, N, N, 4, 6, 0}
         };
         Graph graph = new Graph(vertex.length, vertex, matrix);
+
+        graph.floyd();
         graph.show();
     }
 }
@@ -37,6 +39,25 @@ class Graph {
 
         for (int i = 0; i < length; i++) {
             Arrays.fill(pre[i], i);
+        }
+    }
+
+    //弗洛伊德算法
+    public void floyd(){
+        int length = 0;
+        // k为中间节点
+        for (int k = 0; k < dis.length; k++) {
+            // i为开始节点
+            for (int i = 0; i < dis.length; i++) {
+                // j为结束节点
+                for (int j = 0; j < dis.length; j++) {
+                    length = dis[i][k] + dis[k][j]; // 以k为中间点，从i->k->j的距离
+                    if(length < dis[i][j]){  //从i->k->j的距离小于i->j的直接距离
+                        dis[i][j] = length;  //更新i->j的距离
+                        pre[i][j] = pre[k][j]; //更新它的前驱节点
+                    }
+                }
+            }
         }
     }
 
