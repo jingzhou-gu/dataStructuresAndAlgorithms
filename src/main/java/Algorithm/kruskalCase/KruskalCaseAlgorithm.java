@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Author: gjz
  * @Date: 2024/1/12 14:04
- * @Description: TODO 克鲁斯卡尔算法
+ * @Description: TODO 克鲁斯卡尔算法 （解决最小生成树问题）
  */
 public class KruskalCaseAlgorithm {
     public static final int INF = Integer.MAX_VALUE;

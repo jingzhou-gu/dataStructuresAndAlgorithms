@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Author: gjz
  * @Date: 2024/1/23 18:13
- * @Description: TODO 弗洛伊德算法
+ * @Description: TODO 弗洛伊德算法 （解决最短路径问题）
  */
 public class FloydAlgorithm {
     public static void main(String[] args) {

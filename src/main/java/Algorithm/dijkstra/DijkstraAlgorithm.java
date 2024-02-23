@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Author: gjz
  * @Date: 2024/1/15 10:53
- * @Description: TODO 迪杰斯特拉算法
+ * @Description: TODO 迪杰斯特拉算法 （解决最短路径问题）
  */
 public class DijkstraAlgorithm {
     public static void main(String[] args) {

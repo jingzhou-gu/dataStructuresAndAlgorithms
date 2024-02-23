@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @Author: gjz
  * @Date: 2024/1/10 14:09
- * @Description: TODO 普利姆算法解决修路问题
+ * @Description: TODO 普利姆算法解决修路问题 （解决最小生成树问题）
  */
 public class PrimAlgorithm {
     public static void main(String[] args) {
